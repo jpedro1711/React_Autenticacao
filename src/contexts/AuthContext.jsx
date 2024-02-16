@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
       setUser(JSON.parse(data));
     }
     setLoading(false);
-  }, [user]);
+  }, []);
 
   async function login(username, password) {
     setLoading(true);
@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('user', JSON.stringify(response.data));
     setUser(response.data);
-    console.log(user);
     setLoading(false);
   }
 
@@ -36,7 +35,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setUser(null);
-    console.log(user);
   }
 
   async function cadastro(username, password) {

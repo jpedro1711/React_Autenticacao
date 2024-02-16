@@ -88,7 +88,7 @@ const Header = () => {
                     }}
                   >
                     <MenuItem onClick={() => handleNavigate('/')}>
-                      <Typography textAlign="center">Proprietarios</Typography>
+                      <Typography textAlign="center">Minhas tarefas</Typography>
                     </MenuItem>
                     <Button variant="inherit">{user.username}</Button>
                     <Button
