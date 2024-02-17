@@ -5,6 +5,7 @@ import { Alert, Button, IconButton, Snackbar, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../contexts/AuthContext';
+import TodoService from '../../services/TodoService';
 
 const CadastrarTodo = () => {
   const [open, setOpen] = React.useState(false);
@@ -13,25 +14,18 @@ const CadastrarTodo = () => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const [msg, setMsg] = useState();
-
-  const getToken = () => {
-    return localStorage.getItem('token');
-  };
+  const todoService = TodoService();
 
   const handleClick = async () => {
     try {
       if (descricao.validate() && dtLimite.validate()) {
-        axios.post(
-          'http://localhost:5240/api/Todo',
-          {
-            description: descricao.value,
-            deadline: dtLimite.value,
-            userId: context.user.userID,
-          },
-          {
-            headers: { Authorization: 'Bearer ' + getToken() },
-          }
-        );
+        const data = {
+          description: descricao.value,
+          deadline: dtLimite.value,
+          userId: context.user.userID,
+        };
+        await todoService.Post(data);
+
         navigate('/');
       } else {
         setMsg('campos inválidos');
@@ -40,7 +34,6 @@ const CadastrarTodo = () => {
     } catch (error) {
       setMsg('Erro. Username duplicado');
       setOpen(true);
-      console.log(error);
     }
   };
 
